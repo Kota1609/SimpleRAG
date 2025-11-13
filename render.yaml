@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: aurora-qa
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: MESSAGES_API_URL
+        value: https://november7-730026606190.europe-west1.run.app/messages/
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8000
+    healthCheckPath: /health
+

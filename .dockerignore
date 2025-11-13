@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Tests
+tests/
+.pytest_cache/
+.coverage
+
+# Data (ChromaDB will be generated on startup, but keep backup)
+data/chromadb/
+!data/messages_backup.json
+
+# Documentation
+docs/
+*.md
+
+# CI/CD
+.github/
+
+# Environment
+.env
+.env.local
+
+# Misc
+*.log
+.DS_Store
+

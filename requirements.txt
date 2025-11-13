@@ -1,0 +1,32 @@
+# Web Framework
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+pydantic==2.10.2
+pydantic-settings==2.6.1
+
+# LLM & Embeddings
+groq>=0.9.0
+sentence-transformers==3.3.1
+torch>=2.0.0
+
+# Vector Database
+chromadb==0.5.23
+
+# Hybrid Search
+rank-bm25==0.2.2
+
+# HTTP Client
+httpx==0.28.0
+
+# Utilities
+python-dotenv==1.0.1
+python-multipart==0.0.19
+
+# Logging
+structlog==24.4.0
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+pytest-cov==6.0.0
+
