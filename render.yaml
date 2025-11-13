@@ -2,17 +2,19 @@ services:
   - type: web
     name: aurora-qa
     env: docker
-    region: oregon
-    plan: free
+    repo: https://github.com/Kota1609/SimpleRAG
+    branch: main
     dockerfilePath: ./Dockerfile
     envVars:
       - key: GROQ_API_KEY
         sync: false
       - key: MESSAGES_API_URL
         value: https://november7-730026606190.europe-west1.run.app/messages/
-      - key: HOST
-        value: 0.0.0.0
-      - key: PORT
-        value: 8000
+      - key: LLM_MODEL
+        value: llama-3.3-70b-versatile
+      - key: EMBEDDING_MODEL
+        value: sentence-transformers/all-MiniLM-L6-v2
+      - key: TOP_K_RESULTS
+        value: 30
     healthCheckPath: /health
-
+    autoDeploy: true
