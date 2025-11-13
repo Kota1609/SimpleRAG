@@ -1,52 +1,57 @@
-# Multi-stage build for optimized image size
+# Optimized Dockerfile for Railway (CPU-only PyTorch for smaller size)
 
-# Stage 1: Builder
-FROM python:3.11-slim as builder
-
-WORKDIR /app
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
-
-# Stage 2: Runtime
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy Python dependencies from builder
-COPY --from=builder /root/.local /root/.local
+# Install minimal build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
-# Make sure scripts in .local are usable
-ENV PATH=/root/.local/bin:$PATH
+# Copy requirements first for caching
+COPY requirements.txt .
 
-# Set environment variables for production
-ENV TOKENIZERS_PARALLELISM=false
-ENV PYTHONUNBUFFERED=1
+# Install dependencies with CPU-only PyTorch (much smaller!)
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+    torch==2.0.0+cpu \
+    -f https://download.pytorch.org/whl/torch_stable.html && \
+    pip install --no-cache-dir \
+    fastapi==0.115.5 \
+    uvicorn[standard]==0.32.1 \
+    pydantic==2.10.2 \
+    pydantic-settings==2.6.1 \
+    groq>=0.9.0 \
+    sentence-transformers==3.3.1 \
+    chromadb==0.5.23 \
+    rank-bm25==0.2.2 \
+    httpx==0.28.0 \
+    python-dotenv==1.0.1 \
+    python-multipart==0.0.19 \
+    structlog==24.4.0 && \
+    pip cache purge
+
+# Set environment variables
+ENV TOKENIZERS_PARALLELISM=false \
+    PYTHONUNBUFFERED=1 \
+    PATH=/root/.local/bin:$PATH
 
 # Copy application code
 COPY app/ ./app/
 COPY .env.example .env
-
-# Copy message backup for cold starts (when API is down)
 COPY data/messages_backup.json ./data/messages_backup.json
 
-# Create data directory for ChromaDB (ephemeral on Railway)
+# Create data directory
 RUN mkdir -p /app/data/chromadb
 
-# Expose port (Railway will override with $PORT)
+# Expose port
 EXPOSE 8000
 
-# Health check (using Railway's $PORT if available)
+# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD python -c "import requests, os; requests.get(f'http://localhost:{os.getenv(\"PORT\", \"8000\")}/health', timeout=5)"
+    CMD python -c "import requests, os; requests.get(f'http://localhost:{os.getenv(\"PORT\", \"8000\")}/health', timeout=5)" || exit 1
 
-# Run the application (Railway will set $PORT, default to 8000)
+# Run the application
 CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
 
