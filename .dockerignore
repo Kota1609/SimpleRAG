@@ -23,9 +23,10 @@ tests/
 .pytest_cache/
 .coverage
 
-# Data (ChromaDB will be generated on startup, but keep backup)
-data/chromadb/
+# Data (include pre-built ChromaDB for fast startup!)
+# data/chromadb/  -- REMOVED: We want to include the pre-built index!
 !data/messages_backup.json
+!data/chromadb/
 
 # Documentation
 docs/

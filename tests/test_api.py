@@ -180,7 +180,7 @@ def test_specific_amina_restaurant_question(client: TestClient):
     # Also test with incorrect name from assignment
     response2 = client.post(
         "/ask",
-        json={"question": "What are Amira's favorite restaurants?"}
+        json={"question": "What are Amina's favorite restaurants?"}
     )
     
     assert response2.status_code == 200

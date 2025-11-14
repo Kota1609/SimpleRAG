@@ -37,8 +37,8 @@ COPY .env.example .env
 # Copy message backup for cold starts (when API is down)
 COPY data/messages_backup.json ./data/messages_backup.json
 
-# Create data directory for ChromaDB (ephemeral on Railway)
-RUN mkdir -p /app/data/chromadb
+# Copy pre-built ChromaDB index (instant startup - no embedding generation needed!)
+COPY data/chromadb/ ./data/chromadb/
 
 # Expose port (Railway will override with $PORT)
 EXPOSE 8000
