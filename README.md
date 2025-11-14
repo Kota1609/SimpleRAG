@@ -212,20 +212,18 @@ I went with hybrid search because pure semantic search failed hard on name-based
 The key insight for me was realizing that for entity-rich data like this, neither semantic nor keyword search alone is good enough. You need both, and you need to combine them intelligently. The re-ranking step where documents that score well in BOTH methods rise to the top - that's where the magic happens.
 
 
-```markdown
+# Bonus 2: Data Insights & Anomalies
 
-## Bonus 2: Data Insights & Anomalies
-
-### Dataset Overview
+## Dataset Overview
 
 - **Total Messages:** 3,349
 - **Unique Members:** 10
 - **Date Range:** November 2024 - October 2025
 - **Average Messages/Member:** 335
 
-### Key Anomalies Identified
+## Key Anomalies Identified
 
-#### 1. **Critical: Name Discrepancy** 🚨
+### 1. **Critical: Name Discrepancy** 🚨
 
 **Issue:** Assignment example references **"Amira"** but the dataset contains **"Amina Van Den Berg"**.
 
@@ -233,19 +231,19 @@ The key insight for me was realizing that for entity-rich data like this, neithe
 
 **Hypothesis:** Typo in documentation or intentional test of data exploration skills.
 
-#### 2. **Temporal Anomaly: Future Timestamps**
+### 2. **Temporal Anomaly: Future Timestamps**
 
 All 3,349 messages contain timestamps in the future (up to October 2025), confirming this is **synthetic test data** generated for the assessment.
 
 **Impact:** Low - does not affect system functionality.
 
-#### 3. **Suspiciously Uniform Distribution**
+### 3. **Suspiciously Uniform Distribution**
 
 Message counts per member range from 288-365 (std dev ~23), far more uniform than real-world data which typically follows a power-law distribution.
 
 **Finding:** Confirms synthetic data generation with intentional balancing.
 
-#### 4. **Data Quality Metrics**
+### 4. **Data Quality Metrics**
 
 | Metric | Score | Notes |
 |--------|-------|-------|
@@ -256,7 +254,7 @@ Message counts per member range from 288-365 (std dev ~23), far more uniform tha
 | Validity | 9/10 | Well-formed structures |
 | **Overall** | **9.2/10** | High quality test dataset |
 
-#### 5. **Content Characteristics**
+### 5. **Content Characteristics**
 
 All members exhibit luxury service patterns:
 - Private jet/yacht bookings
@@ -267,7 +265,7 @@ All members exhibit luxury service patterns:
 
 **Finding:** Consistent with premium concierge service use case.
 
-### Recommendations for Production
+## Recommendations for Production
 
 If moving to real data:
 1. **Date validation** - Reject future timestamps
@@ -277,5 +275,3 @@ If moving to real data:
 
 **Full analysis:** See `docs/data_insights.md`
 
-
-```
