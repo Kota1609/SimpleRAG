@@ -259,11 +259,11 @@ I ran through the usual data quality checks:
 
 | What I Checked | Result | Notes |
 |----------------|--------|-------|
-| **Completeness** | ✅ Solid | Every message has all required fields |
-| **Consistency** | ✅ Pretty good | Just that name thing |
-| **Accuracy** | ⚠️ Mixed | Future dates are weird but intentional |
-| **Duplicates** | ✅ Clean | No duplicate messages found |
-| **Format** | ✅ Good | All UUIDs valid, timestamps parseable |
+| **Completeness** | Solid | Every message has all required fields |
+| **Consistency** | Pretty good | Just that name thing |
+| **Accuracy** | Mixed | Future dates are weird but intentional |
+| **Duplicates** | Clean | No duplicate messages found |
+| **Format** | Good | All UUIDs valid, timestamps parseable |
 
 Overall it's a clean dataset. Clearly generated for testing but well-constructed.
 
