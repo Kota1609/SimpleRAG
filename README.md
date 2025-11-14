@@ -1,3 +1,22 @@
+## Quick Start
+
+**Live API:** https://aurora-rag-production.up.railway.app/
+
+**Interactive Docs:** https://aurora-rag-production.up.railway.app/docs
+
+### Try it out
+
+```bash
+curl -X POST https://aurora-rag-production.up.railway.app/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question": "What are Amira'\''s favorite restaurants?"}'
+```
+
+Or test it in your browser using the [interactive API documentation](https://aurora-rag-production.up.railway.app/docs#/Q%26A/ask_question_ask_post).
+
+
+Demo Link : https://drive.google.com/file/d/1rfP8vCabEY9hQkt27dj_qTjnPL_5ZpcZ/view?usp=sharing
+
 # Bonus 1: Design Notes - Alternative Approaches Considered
 
 ## Overview
